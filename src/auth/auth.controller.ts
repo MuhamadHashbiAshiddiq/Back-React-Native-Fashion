@@ -1,12 +1,14 @@
 import {
   BadRequestException,
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   NotFoundException,
   Post,
   Req,
   Res,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
@@ -15,6 +17,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
 import * as request from 'supertest';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller()
 export class AuthController {
   constructor(
@@ -52,11 +55,9 @@ export class AuthController {
     if (!(await bcrypt.compare(password, user.password))) {
       throw new BadRequestException('Invalid credentials');
     }
+
     const jwt = await this.jwtService.signAsync({ id: user.id });
-
     response.cookie('jwt', jwt, { httpOnly: true });
-    console.log(user);
-
     return user;
   }
 
@@ -64,9 +65,12 @@ export class AuthController {
   async user(@Req() request: Request) {
     const cookie = request.cookies['jwt'];
     const data = await this.jwtService.verifyAsync(cookie);
-    return this.userService.findOne({ id: data.id });
+    return this.userService.findOne({ id: data['id'] });
+  }
+
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+    return { message: 'Logout successful' };
   }
 }
-
-// @Post('logout')
-// async logout(@Res() response: Response) {}

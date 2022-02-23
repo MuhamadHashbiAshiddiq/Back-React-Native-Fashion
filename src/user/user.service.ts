@@ -10,6 +10,14 @@ export class UserService {
   ) {}
 
   async all(): Promise<User[]> {
-    return await this.userRepository.find();
+    return this.userRepository.find();
+  }
+
+  async create(data): Promise<User> {
+    return this.userRepository.save(data);
+  }
+
+  async findOne(condition): Promise<User> {
+    return this.userRepository.findOne(condition);
   }
 }

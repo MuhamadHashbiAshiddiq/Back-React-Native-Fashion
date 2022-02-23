@@ -41,7 +41,7 @@ export class AuthController {
   async login(
     @Body('email') email: string,
     @Body('password') password: string,
-    @Res() response: Response,
+    @Res({ passthrough: true }) response: Response,
   ) {
     const user = await this.userService.findOne({ email });
 
@@ -55,18 +55,18 @@ export class AuthController {
     const jwt = await this.jwtService.signAsync({ id: user.id });
 
     response.cookie('jwt', jwt, { httpOnly: true });
+    console.log(user);
 
     return user;
   }
 
   @Get('user')
- async user(@Req() request:Request) {
+  async user(@Req() request: Request) {
     const cookie = request.cookies['jwt'];
     const data = await this.jwtService.verifyAsync(cookie);
     return this.userService.findOne({ id: data.id });
   }
- }
+}
 
-  // @Post('logout')
-  // async logout(@Res() response: Response) {}
-
+// @Post('logout')
+// async logout(@Res() response: Response) {}

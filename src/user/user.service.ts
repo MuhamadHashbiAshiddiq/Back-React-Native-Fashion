@@ -10,14 +10,18 @@ export class UserService {
   ) {}
 
   async all(): Promise<User[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async create(data): Promise<User> {
-    return this.userRepository.save(data);
+    return await this.userRepository.save(data);
   }
 
   async findOne(condition): Promise<User> {
-    return this.userRepository.findOne(condition);
+    return await this.userRepository.findOne(condition);
+  }
+
+  async update(id: number, data): Promise<any> {
+    return await this.userRepository.update(id, data);
   }
 }

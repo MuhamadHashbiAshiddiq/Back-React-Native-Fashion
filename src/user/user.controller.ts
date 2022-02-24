@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
   ValidationPipe,
@@ -14,6 +15,7 @@ import { UserService } from './user.service';
 import * as bcrypt from 'bcryptjs';
 import { UserCreateDto } from './models/user-create.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { UserUpdateDTO } from './models/user-update.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseGuards(AuthGuard)
@@ -40,6 +42,13 @@ export class UserController {
 
   @Get(':id')
   async get(@Param('id') id: number) {
+    return await this.userService.findOne({ id });
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() body: UserUpdateDTO) {
+    await this.userService.update(id, body);
+
     return await this.userService.findOne({ id });
   }
 }

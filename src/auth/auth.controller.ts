@@ -10,6 +10,7 @@ import {
   Res,
   UseGuards,
   UseInterceptors,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
@@ -28,7 +29,9 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async register(@Body() body: RegisterDto) {
+  async register(
+    @Body(new ValidationPipe({ whitelist: true })) body: RegisterDto,
+  ) {
     if (body.password !== body.confirmPassword) {
       throw new BadRequestException('Passwords do not match');
     }
@@ -36,7 +39,7 @@ export class AuthController {
     const hashed = await bcrypt.hash(body.password, 12);
 
     return this.userService.create({
-      // name: body.name,
+      username: body.username,
       email: body.email,
       password: hashed,
     });

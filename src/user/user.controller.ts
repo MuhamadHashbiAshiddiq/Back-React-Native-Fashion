@@ -3,6 +3,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -25,7 +26,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async all(@Query('page') page = 1): Promise<User[]> {
+  async all(@Query('page') page = 1) {
     return await this.userService.paginate(page);
   }
 
@@ -51,5 +52,13 @@ export class UserController {
     await this.userService.update(id, body);
 
     return await this.userService.findOne({ id });
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    await this.userService.delete(id);
+    return {
+      message: 'Delete success',
+    };
   }
 }

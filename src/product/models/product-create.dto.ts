@@ -2,9 +2,8 @@ import { IsNotEmpty } from 'class-validator';
 
 export class ProductCreateDto {
   @IsNotEmpty()
-  name: string;
+  title: string;
 
-  @IsNotEmpty()
   description: string;
 
   @IsNotEmpty()
@@ -12,4 +11,10 @@ export class ProductCreateDto {
 
   @IsNotEmpty()
   price: number;
+
+  @IsNotEmpty()
+  stock: number;
+
+  categories?: Array<number>;
+  sizes?: Array<number>;
 }

@@ -8,9 +8,12 @@ export class Product {
   @Column()
   title: string;
 
-  @Column()
+  @Column('text', { nullable: true })
   description: string;
 
   @Column()
   price: number;
+
+  @Column()
+  stock: number;
 }

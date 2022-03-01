@@ -15,7 +15,7 @@ import { ProductCreateDto } from './models/product-create.dto';
 import { ProductUpdateDto } from './models/product-update.dto';
 
 @UseGuards(AuthGuard)
-@Controller('product')
+@Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
 

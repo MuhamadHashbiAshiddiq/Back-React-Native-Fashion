@@ -1,4 +1,3 @@
-import { User } from './models/user.entity';
 import {
   BadRequestException,
   Body,
@@ -22,6 +21,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { UserUpdateDTO } from './models/user-update.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { Request } from 'express';
+import { User } from './models/user.entity';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseGuards(AuthGuard)

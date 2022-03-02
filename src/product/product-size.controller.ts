@@ -9,7 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Category } from './models/category.entity';
+import { ProductSize } from './models/product-size.entity';
 import { ProductSizeService } from './product-size.service';
 
 @Controller('sizes')
@@ -18,12 +18,12 @@ export class ProductSizeController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getProductSizes(): Promise<Category[]> {
+  async getProductSizes(): Promise<ProductSize[]> {
     return this.productSizeService.getProductSizes();
   }
 
   @Post()
-  async createProductSizes(@Body('name') name: string): Promise<Category> {
+  async createProductSizes(@Body('name') name: string): Promise<ProductSize> {
     return this.productSizeService.createProductSize({ name });
   }
 

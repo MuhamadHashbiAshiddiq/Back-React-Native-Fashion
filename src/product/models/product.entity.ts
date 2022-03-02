@@ -16,4 +16,5 @@ export class Product {
 
   @Column()
   stock: number;
+
 }

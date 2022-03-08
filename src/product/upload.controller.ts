@@ -18,7 +18,7 @@ export class UploadController {
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
-        destination: './files/img/product',
+        destination: './files/img/uploads',
         filename(_, file, callback) {
           const randomName = Array(32)
             .fill(null)
@@ -35,8 +35,8 @@ export class UploadController {
     };
   }
 
-  @Get('uploads/:path')
+  @Get('files/img/uploads/:path')
   async getImage(@Param('path') path, @Res() res: Response) {
-    res.sendFile(path, { root: 'uploads' });
+    res.sendFile(path, { root: 'files/img/uploads' });
   }
 }

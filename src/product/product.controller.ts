@@ -21,11 +21,13 @@ export class ProductController {
 
   @Get()
   async all(@Query('page') page = 1) {
+    console.log(page);
     return await this.productService.paginate(page);
   }
 
   @Post()
   async create(@Body() body: ProductCreateDto) {
+    console.log(body);
     return await this.productService.create(body);
   }
 

@@ -34,7 +34,8 @@ export class AuthController {
   async register(
     @Body(new ValidationPipe({ whitelist: true })) body: RegisterDto,
   ) {
-    if (body.password !== body.confirmPassword) {
+    console.log(body);
+    if (body.password !== body.passwordConfirm) {
       throw new BadRequestException('Passwords do not match');
     }
 
@@ -54,7 +55,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const user = await this.userService.findOne({ email });
-
+    console.log(user);
     if (!user) {
       throw new NotFoundException('User not found');
     }

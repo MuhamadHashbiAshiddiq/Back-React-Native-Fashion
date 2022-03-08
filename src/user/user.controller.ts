@@ -67,9 +67,9 @@ export class UserController {
   async updatePassword(
     @Req() request: Request,
     @Body('password') password: string,
-    @Body('confirmPassword') confirmPassword: string,
+    @Body('passwordConfirm') passwordConfirm: string,
   ) {
-    if (password !== confirmPassword) {
+    if (password !== passwordConfirm) {
       throw new BadRequestException('Passwords do not match');
     }
 
